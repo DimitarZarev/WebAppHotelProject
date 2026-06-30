@@ -1,0 +1,71 @@
+﻿@model WebAppHotelFinal.Models.Reservation
+
+@{
+    ViewData["Title"] = "Create Reservation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">Нова резервация</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- ROOM -->
+                <div class="mb-3">
+                    <label asp-for="RoomId" class="form-label"></label>
+                    <select asp-for="RoomId" class="form-select" asp-items="ViewBag.RoomId">
+                        <option value="">-- Избери стая --</option>
+                    </select>
+                    <span asp-validation-for="RoomId" class="text-danger"></span>
+                </div>
+
+                <!-- CLIENT (ADMIN ONLY) -->
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="mb-3">
+                        <label asp-for="ClientId" class="form-label">Клиент</label>
+                        <select asp-for="ClientId"
+                                class="form-select"
+                                asp-items="ViewBag.ClientId">
+                            <option value="">-- Избери клиент --</option>
+                        </select>
+                        <span asp-validation-for="ClientId" class="text-danger"></span>
+                    </div>
+                }
+
+                <!-- DATE IN -->
+                <div class="mb-3">
+                    <label asp-for="DateIn" class="form-label"></label>
+                    <input asp-for="DateIn" class="form-control" type="date" />
+                    <span asp-validation-for="DateIn" class="text-danger"></span>
+                </div>
+
+                <!-- DATE OUT -->
+                <div class="mb-3">
+                    <label asp-for="DateOut" class="form-label"></label>
+                    <input asp-for="DateOut" class="form-control" type="date" />
+                    <span asp-validation-for="DateOut" class="text-danger"></span>
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary me-2">
+                        Създай
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        Назад
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

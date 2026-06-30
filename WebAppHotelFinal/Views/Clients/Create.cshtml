@@ -1,0 +1,55 @@
+﻿@model WebAppHotelFinal.Models.Client
+
+@{
+    ViewData["Title"] = "Нов клиент";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">Нов клиент</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FullName" class="form-label">Пълно име</label>
+                    <input asp-for="FullName"
+                           class="form-control"
+                           placeholder="Напр. Васил Априлов"
+                           maxlength="60" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label">Телефонен номер</label>
+                    <input asp-for="PhoneNumber"
+                           class="form-control"
+                           placeholder="08XXXXXXXX"
+                           inputmode="numeric"
+                           pattern="[0-9]{10}"
+                           maxlength="10" />
+                    <small class="text-muted">Само цифри, до 10 символа.</small>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="IsAdult" />
+                    <label class="form-check-label" asp-for="IsAdult">Пълнолетен</label>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary me-2">Създай</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Назад</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebAppHotelFinal.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Направени резервации";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Направени резервации</h2>
+
+    <a asp-action="Create" class="btn btn-primary mb-4">
+        ➕ Нова резервация
+    </a>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Room @item.Room.NumberRoom
+                        </h5>
+
+                        <p class="card-text">
+                            <strong>Client:</strong> @item.Client.FullName <br />
+                            <strong>Check-in:</strong> @item.DateIn.ToString("dd.MM.yyyy") <br />
+                            <strong>Check-out:</strong> @item.DateOut.ToString("dd.MM.yyyy") <br />
+                            <strong>Total:</strong> @item.TotalPrice €
+                        </p>
+
+                        <a asp-action="Details"
+                           asp-route-id="@item.Id"
+                           class="btn btn-outline-primary btn-sm">
+                            Details
+                        </a>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="btn btn-outline-warning btn-sm">
+                                Edit
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.Id"
+                               class="btn btn-outline-danger btn-sm">
+                                Delete
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
